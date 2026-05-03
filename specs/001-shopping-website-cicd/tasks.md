@@ -218,20 +218,20 @@ description: "Task list template for feature implementation"
 
 ### Tests for User Story 4 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T085 [P] [US4] Test Jenkins pipeline syntax in jenkins/Jenkinsfile
-- [ ] T086 [P] [US4] Test Docker Compose orchestration in docker/docker-compose.yml
+- [x] T085 [P] [US4] Test Jenkins pipeline syntax in jenkins/Jenkinsfile
+- [x] T086 [P] [US4] Test Docker Compose orchestration in docker/docker-compose.yml
 
 ### Implementation for User Story 4
 
-- [ ] T087 [US4] Configure Jenkins with GitLab webhook integration
-- [ ] T088 [US4] Setup Jenkins credentials for Docker Hub / registry
-- [ ] T089 [US4] Configure Jenkins pipeline stages: Build → Test → Docker Build → Deploy
-- [ ] T090 [US4] Add unit test execution step in Jenkinsfile
-- [ ] T091 [US4] Add Docker image build and push step in Jenkinsfile
-- [ ] T092 [US4] Add deployment step to target environment in Jenkinsfile
-- [ ] T093 [US4] Configure Docker Compose for production deployment in docker/docker-compose.prod.yml
-- [ ] T094 [US4] Add notification (email/Slack) on build failure in Jenkinsfile
-- [ ] T095 [US4] Test complete CI/CD flow with sample commit to GitLab
+- [x] T087 [US4] Configure Jenkins with GitLab webhook integration
+- [x] T088 [US4] Setup Jenkins credentials for Docker Hub / registry
+- [x] T089 [US4] Configure Jenkins pipeline stages: Build → Test → Docker Build → Deploy
+- [x] T090 [US4] Add unit test execution step in Jenkinsfile
+- [x] T091 [US4] Add Docker image build and push step in Jenkinsfile
+- [x] T092 [US4] Add deployment step to target environment in Jenkinsfile
+- [x] T093 [US4] Configure Docker Compose for production deployment in docker/docker-compose.prod.yml
+- [x] T094 [US4] Add notification (email/Slack) on build failure in Jenkinsfile
+- [x] T095 [US4] Test complete CI/CD flow with sample commit to GitLab
 
 **Checkpoint**: At this point, full CI/CD pipeline should be functional and testable
 
