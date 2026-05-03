@@ -240,6 +240,7 @@ jenkins-sample/
 > 📜 本專案遵循 **企業購物網站與 Jenkins CI/CD 學習專案憲法**，核心原則如下：
 
 ### I. 技術架構原則 ✅
+
 - 前後端分離架構，前端使用 **Vue 3 + Tailwind CSS v4.* + PrimeVue v4.* + Pinia**
 - 後端使用 **C# .NET 10 Web API** 採 RESTful API 設計模式
 - 資料庫使用 **Microsoft SQL Server (MSSQL)**
@@ -247,11 +248,13 @@ jenkins-sample/
 - 確保 **RWD 響應式設計**，支援桌面與行動裝置
 
 ### II. 功能需求原則 ✅
+
 - 前台功能：客戶註冊與登入、商品瀏覽與搜尋、商品加入購物車、結帳功能（僅支援貨到付款）
 - 後台功能：商品上架管理、訂單管理、會員管理
 - 所有功能須符合企業購物網站基本需求
 
 ### III. 開發與部署規範 ✅
+
 - 版本控制平台使用 **GitLab**，採用 **feature branch 工作流**
 - 提交訊息 **必須使用繁體中文**撰寫
 - CI/CD 工具使用 **Jenkins**，自動化流程包含：
@@ -262,12 +265,14 @@ jenkins-sample/
 - 前端、後端、資料庫皆需建立 **Dockerfile**，使用 **Docker Compose** 進行多容器編排
 
 ### IV. 溝通與文件規範 ✅
+
 - 專案主要語言為 **繁體中文**，適用範圍包含所有專案文件、程式碼註解、提交訊息、AI 溝通
 - 所有規格文件使用 **Markdown 格式**
 - 技術文件需包含 **官網參考連結**
 - API 文件需完整描述端點、請求與回應格式
 
 ### V. 學習與品質原則 ✅
+
 - 專案目標為理解 **Jenkins CI/CD 完整流程**、掌握前後端分離架構實作、熟悉 Docker 容器化部署、學習 GitLab 版本控制最佳實踐
 - 程式碼必須遵循各技術框架的 **官方風格指南**
 - 前後端需包含 **單元測試**
@@ -356,11 +361,13 @@ docker-compose logs -f
 
 1. 確保 GitLab 專案已設定 webhook 觸發 Jenkins
 2. 推送程式碼至 feature branch：
+
    ```bash
    git add .
    git commit -m "feat: 實作用戶註冊功能"
    git push origin 001-shopping-website-cicd
    ```
+
 3. Jenkins 將自動觸發 Pipeline：
    - Build: 建置前端與後端
    - Test: 執行單元測試
@@ -396,8 +403,8 @@ docker-compose logs -f
 
 | 帳號類型 | 用戶名 | 電子郵件 | 密碼 | 權限 |
 |----------|--------|----------|------|------|
-| 一般用戶 | testuser | test@example.com | Test1234 | customer |
-| 管理員 | admin | admin@example.com | Admin1234 | admin |
+| 一般用戶 | testuser | <test@example.com> | Test1234 | customer |
+| 管理員 | admin | <admin@example.com> | Admin1234 | admin |
 
 ## 🔄 Jenkins CI/CD 流程
 
@@ -593,14 +600,14 @@ curl -X POST https://localhost:5000/api/orders/checkout \
 
 ## 📂 參考官網
 
-- Jenkins 官方教學: https://www.jenkins.io/doc/tutorials/
-- GitLab Docker 映像: https://hub.docker.com/u/gitlab
-- Jenkins Docker 映像: https://hub.docker.com/r/jenkins/jenkins
-- .NET 10 Docker 建置: https://learn.microsoft.com/zh-tw/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-10-0
-- Vue.js 官方指南: https://vuejs.org/guide/introduction.html
-- MSSQL Docker 映像: https://hub.docker.com/r/microsoft/mssql-server
-- Tailwind CSS 中文文件: https://www.tailwindcss.cn/
-- PrimeVue 官方文件: https://primevue.org/v4/
+- Jenkins 官方教學: <https://www.jenkins.io/doc/tutorials/>
+- GitLab Docker 映像: <https://hub.docker.com/u/gitlab>
+- Jenkins Docker 映像: <https://hub.docker.com/r/jenkins/jenkins>
+- .NET 10 Docker 建置: <https://learn.microsoft.com/zh-tw/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-10-0>
+- Vue.js 官方指南: <https://vuejs.org/guide/introduction.html>
+- MSSQL Docker 映像: <https://hub.docker.com/r/microsoft/mssql-server>
+- Tailwind CSS 中文文件: <https://www.tailwindcss.cn/>
+- PrimeVue 官方文件: <https://primevue.org/v4/>
 
 ## 📝 問答記錄
 
@@ -638,6 +645,7 @@ curl -X POST https://localhost:5000/api/orders/checkout \
 - ✅ **Phase 7: Polish** (T096-T104) - 效能優化、安全性
 
 **Git 提交記錄** (7 個提交):
+
 1. `3ab6649` - feat(Phase 1): 完成 Setup 階段
 2. `814f4ea` - feat(Phase 2): 完成 Foundational 階段
 3. `53fa7e8` - feat(Phase 3): 完成 User Story 1 MVP
