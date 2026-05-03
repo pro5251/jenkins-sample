@@ -241,15 +241,15 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T096 [P] Documentation updates in docs/ (update quickstart.md with actual experiences)
-- [ ] T097 Code cleanup and refactoring across backend and frontend
-- [ ] T098 Performance optimization across all stories (database indexing, API response caching)
-- [ ] T099 [P] Additional unit tests (if requested) in backend/tests/unit/ and frontend/tests/
-- [ ] T100 Security hardening (input validation, SQL injection prevention, XSS protection)
-- [ ] T101 [P] Add logging and monitoring (Serilog for backend, console logging for frontend)
-- [ ] T102 Run quickstart.md validation and update based on actual setup experience
-- [ ] T103 [P] Add error handling improvements across all user stories
-- [ ] T104 Add accessibility (a11y) improvements for RWD design
+- [x] T096 [P] Documentation updates in docs/ (update quickstart.md with actual experiences)
+- [x] T097 Code cleanup and refactoring across backend and frontend
+- [x] T098 Performance optimization across all stories (database indexing, API response caching)
+- [x] T099 [P] Additional unit tests (if requested) in backend/tests/unit/ and frontend/tests/
+- [x] T100 Security hardening (input validation, SQL injection prevention, XSS protection)
+- [x] T101 [P] Add logging and monitoring (Serilog for backend, console logging for frontend)
+- [x] T102 Run quickstart.md validation and update based on actual setup experience
+- [x] T103 [P] Add error handling improvements across all user stories
+- [x] T104 Add accessibility (a11y) improvements for RWD design
 
 ---
 
