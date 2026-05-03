@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building backend and frontend...'
+                dir('backend') {
+                    bat 'dotnet build'
+                }
+                dir('frontend') {
+                    bat 'npm install && npm run build'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                dir('backend') {
+                    bat 'dotnet test'
+                }
+                dir('frontend') {
+                    bat 'npm run test'
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                echo 'Building Docker images...'
+                bat 'docker-compose build'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                bat 'docker-compose up -d'
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo 'Build failed! Sending notifications...'
+        }
+        success {
+            echo 'Build succeeded!'
+        }
+    }
+}

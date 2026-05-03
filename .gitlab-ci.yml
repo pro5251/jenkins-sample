@@ -1,0 +1,19 @@
+stages:
+  - build
+  - test
+
+build_backend:
+  stage: build
+  script:
+    - cd backend
+    - dotnet build
+  tags:
+    - dotnet
+
+test_backend:
+  stage: test
+  script:
+    - cd backend
+    - dotnet test
+  tags:
+    - dotnet
