@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace backend.Services;
+namespace backend.Services
 {
     public class AuthService
     {

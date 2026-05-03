@@ -2,7 +2,7 @@ using backend.Data;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Services;
+namespace backend.Services
 {
     public class AdminService
     {
@@ -15,7 +15,7 @@ namespace backend.Services;
 
         public async Task<Product?> CreateProduct(Product product)
         {
-            return await _context.Products.AddAsync(product);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return product;
         }
