@@ -1,31 +1,42 @@
-export const state = () => ({
-  user: null,
-  isAuthenticated: false
+import { defineStore } from 'pinia'
+import authService from '../services/auth'
+
+export const useAuthStore = defineStore('auth', {
+  state: () => ({
+    user: null,
+    isAuthenticated: false
+  }),
+  getters: {
+    currentUser: (state) => state.user,
+    isAuthenticated: (state) => state.isAuthenticated
+  },
+  actions: {
+    async login(credentials) {
+      const user = await authService.login(credentials)
+      this.user = user
+      this.isAuthenticated = true
+      return user
+    },
+    async logout() {
+      await authService.logout()
+      this.user = null
+      this.isAuthenticated = false
+    },
+    async fetchCurrentUser() {
+      try {
+        const user = await authService.getCurrentUser()
+        this.user = user
+        this.isAuthenticated = true
+        return user
+      } catch (error) {
+        this.user = null
+        this.isAuthenticated = false
+        return null
+      }
+    },
+    async register(userData) {
+      const user = await authService.register(userData)
+      return user
+    }
+  }
 })
-
-export const getters = {
-  currentUser: (state) => state.user,
-  isAuthenticated: (state) => state.isAuthenticated
-}
-
-export const mutations = {
-  SET_USER(state, user) {
-    state.user = user
-    state.isAuthenticated = !!user
-  },
-  LOGOUT(state) {
-    state.user = null
-    state.isAuthenticated = false
-  }
-}
-
-export const actions = {
-  async login({ commit }, credentials) {
-    // API call will be implemented here
-    console.log('Login action', credentials)
-  },
-  async logout({ commit }) {
-    // API call will be implemented here
-    commit('LOGOUT')
-  }
-}

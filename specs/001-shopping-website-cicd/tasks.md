@@ -125,10 +125,10 @@ description: "Task list template for feature implementation"
 - [x] T044 [US1] Implement products store in frontend/src/stores/products.js
 - [x] T045 [US1] Implement cart store in frontend/src/stores/cart.js
 - [x] T046 [US1] Implement orders store in frontend/src/stores/orders.js
-- [ ] T047 [P] [US1] Create auth API service in frontend/src/services/auth.js
-- [ ] T048 [P] [US1] Create products API service in frontend/src/services/products.js
-- [ ] T049 [P] [US1] Create cart API service in frontend/src/services/cart.js
-- [ ] T050 [P] [US1] Create orders API service in frontend/src/services/orders.js
+- [x] T047 [P] [US1] Create auth API service in frontend/src/services/auth.js
+- [x] T048 [P] [US1] Create products API service in frontend/src/services/products.js
+- [x] T049 [P] [US1] Create cart API service in frontend/src/services/cart.js
+- [x] T050 [P] [US1] Create orders API service in frontend/src/services/orders.js
 - [x] T051 [US1] Implement RWD responsive layout testing across desktop and mobile viewports
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently

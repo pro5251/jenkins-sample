@@ -34,12 +34,14 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('../pages/UserProfilePage.vue')
+    component: () => import('../pages/UserProfilePage.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/admin',
-    name: 'AdminLayout',
+    name: 'Admin',
     component: () => import('../components/layout/AdminLayout.vue'),
+    meta: { requiresAdmin: true },
     children: [
       {
         path: 'products',
@@ -63,6 +65,22 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  if (to.meta.requiresAuth && !token) {
+    next('/login')
+  } else if (to.meta.requiresAdmin && token) {
+    const user = JSON.parse(localStorage.getItem('user') || '{}')
+    if (user.role !== 'admin') {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

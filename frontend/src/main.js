@@ -1,13 +1,16 @@
-import { createApp } from 'vue';
-import PrimeVue from 'primevue/config';
-import 'primevue/resources/themes/lara-light-blue/theme.css';
-import 'primeicons/primeicons.css';
-import App from './App.vue';
-import router from './router';
-import { createPinia } from 'pinia';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import PrimeVue from 'primevue/config'
+import 'primeicons/primeicons.css'
+import './style.css'
+import App from './App.vue'
+import router from './router'
 
-const app = createApp(App);
-app.use(PrimeVue);
-app.use(router);
-app.use(createPinia());
-app.mount('#app');
+const app = createApp(App)
+const pinia = createPinia()
+
+app.use(pinia)
+app.use(router)
+app.use(PrimeVue)
+
+app.mount('#app')
