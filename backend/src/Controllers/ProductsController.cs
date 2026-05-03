@@ -7,7 +7,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : Controller
     {
         private readonly AppDbContext _context;
 
