@@ -143,34 +143,34 @@ description: "Task list template for feature implementation"
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T052 [P] [US2] Contract test for user registration endpoint in backend/tests/contract/test_register.cs
-- [ ] T053 [P] [US2] Contract test for product search endpoint in backend/tests/contract/test_products.cs
-- [ ] T054 [P] [US2] Integration test for checkout flow in backend/tests/integration/test_checkout.cs
+- [x] T052 [P] [US2] Contract test for user registration endpoint in backend/tests/contract/test_register.cs
+- [x] T053 [P] [US2] Contract test for product search endpoint in backend/tests/contract/test_products.cs
+- [x] T054 [P] [US2] Integration test for checkout flow in backend/tests/integration/test_checkout.cs
 
 ### Implementation for User Story 2
 
 **Backend Tasks:**
 
-- [ ] T055 [US2] Implement user registration service with validation in backend/src/Services/AuthService.cs
-- [ ] T056 [US2] Implement product search with filtering in backend/src/Services/ProductService.cs
-- [ ] T057 [US2] Implement cart service (add, update, remove items) in backend/src/Services/CartService.cs
-- [ ] T058 [US2] Implement order creation service (checkout) in backend/src/Services/OrderService.cs
-- [ ] T059 [US2] Add stock validation before checkout in backend/src/Services/OrderService.cs
-- [ ] T060 [US2] Implement password hashing and validation in backend/src/Services/AuthService.cs
+- [x] T055 [US2] Implement user registration service with validation in backend/src/Services/AuthService.cs
+- [x] T056 [US2] Implement product search with filtering in backend/src/Services/ProductService.cs
+- [x] T057 [US2] Implement cart service (add, update, remove items) in backend/src/Services/CartService.cs
+- [x] T058 [US2] Implement order creation service (checkout) in backend/src/Services/OrderService.cs
+- [x] T059 [US2] Add stock validation before checkout in backend/src/Services/OrderService.cs
+- [x] T060 [US2] Implement password hashing and validation in backend/src/Services/AuthService.cs
 
 **Frontend Tasks:**
 
-- [ ] T061 [P] [US2] Create RegisterPage in frontend/src/pages/RegisterPage.vue
-- [ ] T062 [P] [US2] Create LoginPage in frontend/src/pages/LoginPage.vue
-- [ ] T063 [US2] Create HomePage with product listing in frontend/src/pages/HomePage.vue
-- [ ] T064 [US2] Create ProductDetailPage in frontend/src/pages/ProductDetailPage.vue
-- [ ] T065 [US2] Create CartPage in frontend/src/pages/CartPage.vue
-- [ ] T066 [US2] Create CheckoutPage in frontend/src/pages/CheckoutPage.vue
-- [ ] T067 [US2] Create UserProfilePage in frontend/src/pages/UserProfilePage.vue
-- [ ] T068 [P] [US2] Implement ProductCard component in frontend/src/components/ProductCard.vue
-- [ ] T069 [P] [US2] Implement CartItem component in frontend/src/components/CartItem.vue
-- [ ] T070 [US2] Add search and filter functionality to HomePage
-- [ ] T071 [US2] Implement form validation for registration and checkout
+- [x] T061 [P] [US2] Create RegisterPage in frontend/src/pages/RegisterPage.vue
+- [x] T062 [P] [US2] Create LoginPage in frontend/src/pages/LoginPage.vue
+- [x] T063 [US2] Create HomePage with product listing in frontend/src/pages/HomePage.vue
+- [x] T064 [US2] Create ProductDetailPage in frontend/src/pages/ProductDetailPage.vue
+- [x] T065 [US2] Create CartPage in frontend/src/pages/CartPage.vue
+- [x] T066 [US2] Create CheckoutPage in frontend/src/pages/CheckoutPage.vue
+- [x] T067 [US2] Create UserProfilePage in frontend/src/pages/UserProfilePage.vue
+- [x] T068 [P] [US2] Implement ProductCard component in frontend/src/components/ProductCard.vue
+- [x] T069 [P] [US2] Implement CartItem component in frontend/src/components/CartItem.vue
+- [x] T070 [US2] Add search and filter functionality to HomePage
+- [x] T071 [US2] Implement form validation for registration and checkout
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
