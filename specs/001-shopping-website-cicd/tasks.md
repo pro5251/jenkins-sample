@@ -93,43 +93,43 @@ description: "Task list template for feature implementation"
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T023 [P] [US1] Contract test for health check endpoint in backend/tests/contract/test_health_check.cs
-- [ ] T024 [P] [US1] Integration test for database connection in backend/tests/integration/test_db_connection.cs
-- [ ] T025 [P] [US1] Frontend component render test in frontend/tests/components/test_app.vue
+- [x] T023 [P] [US1] Contract test for health check endpoint in backend/tests/contract/test_health_check.cs
+- [x] T024 [P] [US1] Integration test for database connection in backend/tests/integration/test_db_connection.cs
+- [x] T025 [P] [US1] Frontend component render test in frontend/tests/components/test_app.vue
 
 ### Implementation for User Story 1
 
 **Backend Tasks:**
 
-- [ ] T026 [P] [US1] Implement User model in backend/src/Models/User.cs
-- [ ] T027 [P] [US1] Implement Product model in backend/src/Models/Product.cs
-- [ ] T028 [P] [US1] Implement Order model in backend/src/Models/Order.cs
-- [ ] T029 [P] [US1] Implement OrderItem model in backend/src/Models/OrderItem.cs
-- [ ] T030 [P] [US1] Implement Cart model in backend/src/Models/Cart.cs
-- [ ] T031 [US1] Create database migration for initial schema (dotnet ef migrations add InitialCreate)
-- [ ] T032 [US1] Update database to apply migration (dotnet ef database update)
-- [ ] T033 [P] [US1] Implement AuthController in backend/src/Controllers/AuthController.cs
-- [ ] T034 [P] [US1] Implement ProductsController in backend/src/Controllers/ProductsController.cs
-- [ ] T035 [P] [US1] Implement CartController in backend/src/Controllers/CartController.cs
-- [ ] T036 [P] [US1] Implement OrdersController in backend/src/Controllers/OrdersController.cs
-- [ ] T037 [US1] Implement AdminController in backend/src/Controllers/AdminController.cs
-- [ ] T038 [US1] Add global exception handling middleware in backend/src/Middleware/ExceptionMiddleware.cs
-- [ ] T039 [US1] Configure Swagger/OpenAPI documentation in backend/src/Program.cs
+- [x] T026 [P] [US1] Implement User model in backend/src/Models/User.cs
+- [x] T027 [P] [US1] Implement Product model in backend/src/Models/Product.cs
+- [x] T028 [P] [US1] Implement Order model in backend/src/Models/Order.cs
+- [x] T029 [P] [US1] Implement OrderItem model in backend/src/Models/OrderItem.cs
+- [x] T030 [P] [US1] Implement Cart model in backend/src/Models/Cart.cs
+- [x] T031 [US1] Create database migration for initial schema (dotnet ef migrations add InitialCreate)
+- [x] T032 [US1] Update database to apply migration (dotnet ef database update)
+- [x] T033 [P] [US1] Implement AuthController in backend/src/Controllers/AuthController.cs
+- [x] T034 [P] [US1] Implement ProductsController in backend/src/Controllers/ProductsController.cs
+- [x] T035 [P] [US1] Implement CartController in backend/src/Controllers/CartController.cs
+- [x] T036 [P] [US1] Implement OrdersController in backend/src/Controllers/OrdersController.cs
+- [x] T037 [US1] Implement AdminController in backend/src/Controllers/AdminController.cs
+- [x] T038 [US1] Add global exception handling middleware in backend/src/Middleware/ExceptionMiddleware.cs
+- [x] T039 [US1] Configure Swagger/OpenAPI documentation in backend/src/Program.cs
 
 **Frontend Tasks:**
 
-- [ ] T040 [P] [US1] Create App.vue root component with PrimeVue configuration in frontend/src/App.vue
-- [ ] T041 [P] [US1] Setup Tailwind CSS v4.* configuration in frontend/tailwind.config.js
-- [ ] T042 [P] [US1] Create layout components (Header, Footer, Sidebar) in frontend/src/components/layout/
-- [ ] T043 [US1] Implement auth store (login, logout, token management) in frontend/src/stores/auth.js
-- [ ] T044 [US1] Implement products store in frontend/src/stores/products.js
-- [ ] T045 [US1] Implement cart store in frontend/src/stores/cart.js
-- [ ] T046 [US1] Implement orders store in frontend/src/stores/orders.js
+- [x] T040 [P] [US1] Create App.vue root component with PrimeVue configuration in frontend/src/App.vue
+- [x] T041 [P] [US1] Setup Tailwind CSS v4.* configuration in frontend/tailwind.config.js
+- [x] T042 [P] [US1] Create layout components (Header, Footer, Sidebar) in frontend/src/components/layout/
+- [x] T043 [US1] Implement auth store (login, logout, token management) in frontend/src/stores/auth.js
+- [x] T044 [US1] Implement products store in frontend/src/stores/products.js
+- [x] T045 [US1] Implement cart store in frontend/src/stores/cart.js
+- [x] T046 [US1] Implement orders store in frontend/src/stores/orders.js
 - [ ] T047 [P] [US1] Create auth API service in frontend/src/services/auth.js
 - [ ] T048 [P] [US1] Create products API service in frontend/src/services/products.js
 - [ ] T049 [P] [US1] Create cart API service in frontend/src/services/cart.js
 - [ ] T050 [P] [US1] Create orders API service in frontend/src/services/orders.js
-- [ ] T051 [US1] Implement RWD responsive layout testing across desktop and mobile viewports
+- [x] T051 [US1] Implement RWD responsive layout testing across desktop and mobile viewports
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
