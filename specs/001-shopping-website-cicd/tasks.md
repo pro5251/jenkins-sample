@@ -184,27 +184,27 @@ description: "Task list template for feature implementation"
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T072 [P] [US3] Contract test for admin product management in backend/tests/contract/test_admin_products.cs
-- [ ] T073 [P] [US3] Contract test for admin order management in backend/tests/contract/test_admin_orders.cs
+- [x] T072 [P] [US3] Contract test for admin product management in backend/tests/contract/test_admin_products.cs
+- [x] T073 [P] [US3] Contract test for admin order management in backend/tests/contract/test_admin_orders.cs
 
 ### Implementation for User Story 3
 
 **Backend Tasks:**
 
-- [ ] T074 [US3] Implement admin product management service in backend/src/Services/AdminService.cs
-- [ ] T075 [US3] Implement order status update service in backend/src/Services/OrderService.cs
-- [ ] T076 [US3] Implement user management service for admin in backend/src/Services/AdminService.cs
-- [ ] T077 [US3] Add admin role authorization middleware in backend/src/Middleware/AdminAuthMiddleware.cs
+- [x] T074 [US3] Implement admin product management service in backend/src/Services/AdminService.cs
+- [x] T075 [US3] Implement order status update service in backend/src/Services/OrderService.cs
+- [x] T076 [US3] Implement user management service for admin in backend/src/Services/AdminService.cs
+- [x] T077 [US3] Add admin role authorization middleware in backend/src/Middleware/AdminAuthMiddleware.cs
 
 **Frontend Tasks:**
 
-- [ ] T078 [P] [US3] Create AdminLayout in frontend/src/components/layout/AdminLayout.vue
-- [ ] T079 [US3] Create AdminProductsPage in frontend/src/pages/admin/AdminProductsPage.vue
-- [ ] T080 [US3] Create AdminOrdersPage in frontend/src/pages/admin/AdminOrdersPage.vue
-- [ ] T081 [US3] Create AdminUsersPage in frontend/src/pages/admin/AdminUsersPage.vue
-- [ ] T082 [P] [US3] Implement ProductForm component for add/edit in frontend/src/components/admin/ProductForm.vue
-- [ ] T083 [US3] Implement OrderDetail component in frontend/src/components/admin/OrderDetail.vue
-- [ ] T084 [US3] Add admin navigation and sidebar menu
+- [x] T078 [P] [US3] Create AdminLayout in frontend/src/components/layout/AdminLayout.vue
+- [x] T079 [US3] Create AdminProductsPage in frontend/src/pages/admin/AdminProductsPage.vue
+- [x] T080 [US3] Create AdminOrdersPage in frontend/src/pages/admin/AdminOrdersPage.vue
+- [x] T081 [US3] Create AdminUsersPage in frontend/src/pages/admin/AdminUsersPage.vue
+- [x] T082 [P] [US3] Implement ProductForm component for add/edit in frontend/src/components/admin/ProductForm.vue
+- [x] T083 [US3] Implement OrderDetail component in frontend/src/components/admin/OrderDetail.vue
+- [x] T084 [US3] Add admin navigation and sidebar menu
 
 **Checkpoint**: All user stories should now be independently functional
 

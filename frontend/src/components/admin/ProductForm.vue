@@ -22,10 +22,6 @@
         <label>Category:</label>
         <input v-model="form.category" required />
       </div>
-      <div>
-        <label>Image URL:</label>
-        <input v-model="form.imageUrl" />
-      </div>
       <button type="submit">Save</button>
       <button type="button" @click="$emit('cancel')">Cancel</button>
     </form>
@@ -46,8 +42,7 @@ const form = reactive({
   description: props.product?.description || '',
   price: props.product?.price || 0,
   stock: props.product?.stock || 0,
-  category: props.product?.category || '',
-  imageUrl: props.product?.imageUrl || ''
+  category: props.product?.category || ''
 });
 
 const handleSubmit = () => {

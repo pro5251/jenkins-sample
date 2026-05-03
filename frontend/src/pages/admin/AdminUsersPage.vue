@@ -17,7 +17,7 @@
           <td>{{ user.role }}</td>
           <td>
             <button @click="editUser(user)">Edit</button>
-            <button @click="deleteUser(user.id)">Deactivate</button>
+            <button @click="deactivateUser(user.id)">Deactivate</button>
           </td>
         </tr>
       </tbody>
@@ -38,7 +38,7 @@ const editUser = (user) => {
   // Implementation will be added
 };
 
-const deleteUser = (id) => {
+const deactivateUser = (id) => {
   // Implementation will be added
 };
 </script>
