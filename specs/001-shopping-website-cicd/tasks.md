@@ -67,17 +67,17 @@ description: "Task list template for feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T012 Setup SQL Server database in Docker Compose with initial volume
-- [ ] T013 [P] Configure Entity Framework Core with SQL Server provider in backend/src/Data/AppDbContext.cs
-- [ ] T014 [P] Create database migration framework configuration in backend/
-- [ ] T015 Implement authentication middleware (JWT/Session) in backend/src/Middleware/AuthMiddleware.cs
-- [ ] T016 [P] Create base models/entities that all stories depend on in backend/src/Models/ (User.cs, Product.cs, Order.cs, OrderItem.cs, Cart.cs)
-- [ ] T017 [P] Setup API routing and controller structure in backend/src/Controllers/
-- [ ] T018 Configure CORS policy for frontend-backend communication in backend/src/Program.cs
-- [ ] T019 [P] Setup environment configuration management (appsettings.json, .env files)
-- [ ] T020 [P] Configure Pinia stores structure in frontend/src/stores/ (auth.js, products.js, cart.js, orders.js)
-- [ ] T021 Setup Vue Router with lazy loading in frontend/src/router/index.js
-- [ ] T022 [P] Create API service base configuration in frontend/src/services/api.js
+- [x] T012 Setup SQL Server database in Docker Compose with initial volume
+- [x] T013 [P] Configure Entity Framework Core with SQL Server provider in backend/src/Data/AppDbContext.cs
+- [x] T014 [P] Create database migration framework configuration in backend/
+- [x] T015 Implement authentication middleware (JWT/Session) in backend/src/Middleware/AuthMiddleware.cs
+- [x] T016 [P] Create base models/entities that all stories depend on in backend/src/Models/ (User.cs, Product.cs, Order.cs, OrderItem.cs, Cart.cs)
+- [x] T017 [P] Setup API routing and controller structure in backend/src/Controllers/
+- [x] T018 Configure CORS policy for frontend-backend communication in backend/src/Program.cs
+- [x] T019 [P] Setup environment configuration management (appsettings.json, .env files)
+- [x] T020 [P] Configure Pinia stores structure in frontend/src/stores/ (auth.js, products.js, cart.js, orders.js)
+- [x] T021 Setup Vue Router with lazy loading in frontend/src/router/index.js
+- [x] T022 [P] Create API service base configuration in frontend/src/services/api.js
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
