@@ -1,9 +1,9 @@
 {
-  "ai": "opencode",
+  "ai": "gemini",
   "branch_numbering": "sequential",
-  "context_file": "AGENTS.md",
+  "context_file": "GEMINI.md",
   "here": true,
-  "integration": "opencode",
-  "script": "ps",
+  "integration": "gemini",
+  "script": "sh",
   "speckit_version": "0.8.5.dev0"
 }
