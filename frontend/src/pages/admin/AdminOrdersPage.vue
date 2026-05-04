@@ -1,36 +1,47 @@
 <template>
-  <div class="admin-orders">
-    <h2>Manage Orders</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Customer</th>
-          <th>Total</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="order in orders" :key="order.id">
-          <td>{{ order.id }}</td>
-          <td>{{ order.userName }}</td>
-          <td>{{ order.totalAmount }}</td>
-          <td>
-            <select v-model="order.status" @change="updateStatus(order)">
-              <option value="pending">Pending</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="shipped">Shipped</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-          </td>
-          <td>
-            <button @click="viewOrder(order)">View</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="px-6 py-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Manage Orders</h2>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <table class="w-full border-collapse">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="text-left px-4 py-3 text-sm font-semibold text-gray-600 border-b border-gray-200">Order ID</th>
+            <th class="text-left px-4 py-3 text-sm font-semibold text-gray-600 border-b border-gray-200">Customer</th>
+            <th class="text-left px-4 py-3 text-sm font-semibold text-gray-600 border-b border-gray-200">Total</th>
+            <th class="text-left px-4 py-3 text-sm font-semibold text-gray-600 border-b border-gray-200">Status</th>
+            <th class="text-left px-4 py-3 text-sm font-semibold text-gray-600 border-b border-gray-200">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="order in orders" :key="order.id" class="hover:bg-gray-50 border-b border-gray-100">
+            <td class="px-4 py-3 text-gray-700">#{{ order.id }}</td>
+            <td class="px-4 py-3 text-gray-700">{{ order.userName }}</td>
+            <td class="px-4 py-3 text-gray-700 font-medium">{{ order.totalAmount }}</td>
+            <td class="px-4 py-3">
+              <select
+                v-model="order.status"
+                @change="updateStatus(order)"
+                class="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </td>
+            <td class="px-4 py-3">
+              <button
+                @click="viewOrder(order)"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition-colors"
+              >
+                View
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <OrderDetail v-if="selectedOrder" :order="selectedOrder" @close="selectedOrder = null" />
   </div>
 </template>

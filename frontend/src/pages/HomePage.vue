@@ -1,8 +1,13 @@
 <template>
-  <div class="home">
-    <h2>Welcome to Shopping Website</h2>
-    <p>Browse our products and enjoy shopping!</p>
-    <router-link to="/products" class="btn">View Products</router-link>
+  <div class="text-center py-20 px-6">
+    <h2 class="text-4xl font-bold text-gray-800 mb-4">Welcome to Shopping Website</h2>
+    <p class="text-lg text-gray-500 mb-8">Browse our products and enjoy shopping!</p>
+    <router-link
+      to="/products"
+      class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors text-lg"
+    >
+      View Products
+    </router-link>
   </div>
 </template>
 
@@ -16,18 +21,3 @@ onMounted(() => {
   productsStore.fetchProducts();
 });
 </script>
-
-<style scoped>
-.home {
-  text-align: center;
-  padding: 2rem;
-}
-.btn {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-}
-</style>
