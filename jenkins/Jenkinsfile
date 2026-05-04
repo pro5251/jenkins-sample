@@ -1,56 +1,141 @@
 pipeline {
     agent any
 
+    options {
+        // 整體建置逾時 30 分鐘
+        timeout(time: 30, unit: 'MINUTES')
+        // Console 輸出加上時間戳
+        timestamps()
+        // Console 彩色輸出
+        ansiColor('xterm')
+        // 僅保留最近 10 次建置記錄
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    environment {
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
+        GITLAB_CONNECTION = 'GitLab'
+    }
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building backend and frontend...'
-                dir('backend') {
-                    sh 'dotnet build'
+                checkout scm
+                // 通知 GitLab：建置開始
+                updateGitlabCommitStatus name: 'jenkins-build', state: 'running'
+            }
+        }
+
+        stage('Build') {
+            parallel {
+                stage('Build Backend') {
+                    steps {
+                        dir('backend') {
+                            sh 'dotnet build --configuration Release'
+                        }
+                    }
                 }
-                dir('frontend') {
-                    sh 'npm install && npm run build'
+                stage('Build Frontend') {
+                    steps {
+                        dir('frontend') {
+                            // 使用 npm ci 確保依賴版本鎖定（比 npm install 更適合 CI）
+                            sh 'npm ci && npm run build'
+                        }
+                    }
                 }
             }
         }
 
         stage('Test') {
-            steps {
-                echo 'Running tests...'
-                dir('backend') {
-                    sh 'dotnet test'
+            parallel {
+                stage('Test Backend') {
+                    steps {
+                        dir('backend') {
+                            sh 'dotnet test --configuration Release --logger trx --results-directory TestResults'
+                        }
+                    }
                 }
-                dir('frontend') {
-                    sh 'npm run test -- --run'
+                stage('Test Frontend') {
+                    steps {
+                        dir('frontend') {
+                            sh 'npm run test -- --run'
+                        }
+                    }
                 }
             }
         }
 
         stage('Docker Build') {
             steps {
-                echo 'Building Docker images...'
-                dir('docker') {
-                    sh 'docker compose build'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    dir('docker') {
+                        sh "DOCKER_USERNAME=${DOCKER_USER} IMAGE_TAG=${IMAGE_TAG} docker compose build"
+                    }
+                }
+            }
+        }
+
+        stage('Docker Push') {
+            // 僅 main branch 推送映像至 Docker Hub
+            when {
+                branch 'main'
+            }
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    script {
+                        // 官方 Docker Pipeline DSL：自動處理 login / logout
+                        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                            docker.image("${DOCKER_USER}/jenkins-sample-backend:${IMAGE_TAG}").push()
+                            docker.image("${DOCKER_USER}/jenkins-sample-frontend:${IMAGE_TAG}").push()
+                        }
+                    }
                 }
             }
         }
 
         stage('Deploy') {
+            // 僅 main branch 執行部署
+            when {
+                branch 'main'
+            }
             steps {
-                echo 'Deploying application...'
-                dir('docker') {
-                    sh 'docker compose up -d'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    dir('docker') {
+                        sh "DOCKER_USERNAME=${DOCKER_USER} IMAGE_TAG=${IMAGE_TAG} docker compose up -d"
+                    }
                 }
             }
         }
     }
 
     post {
-        failure {
-            echo 'Build failed! Sending notifications...'
+        always {
+            // 清除 Workspace，釋放磁碟空間
+            cleanWs()
         }
         success {
-            echo 'Build succeeded!'
+            echo '✅ 建置成功！'
+            updateGitlabCommitStatus name: 'jenkins-build', state: 'success'
+        }
+        failure {
+            echo '❌ 建置失敗！請檢查 Console 輸出。'
+            updateGitlabCommitStatus name: 'jenkins-build', state: 'failed'
+        }
+        unstable {
+            echo '⚠️ 建置不穩定（測試有失敗）！'
+            updateGitlabCommitStatus name: 'jenkins-build', state: 'failed'
         }
     }
 }

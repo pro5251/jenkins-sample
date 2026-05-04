@@ -5,7 +5,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong!Passw0rd
+      - SA_PASSWORD=${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd}
     ports:
       - "1433:1433"
     volumes:
@@ -17,12 +17,13 @@ services:
     build:
       context: ../backend
       dockerfile: Dockerfile
+    image: ${DOCKER_USERNAME:-}/jenkins-sample-backend:${IMAGE_TAG:-latest}
     ports:
       - "5000:8080"
     depends_on:
       - mssql
     environment:
-      - ConnectionStrings__DefaultConnection=Server=mssql;Database=ShoppingDB;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=mssql;Database=ShoppingDB;User Id=sa;Password=${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd};TrustServerCertificate=True
     networks:
       - app-network
 
@@ -30,6 +31,7 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+    image: ${DOCKER_USERNAME:-}/jenkins-sample-frontend:${IMAGE_TAG:-latest}
     ports:
       - "3000:80"
     depends_on:

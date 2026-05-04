@@ -179,14 +179,18 @@ jenkins-sample/
 │   └── Dockerfile                     # 前端容器映像
 │
 ├── docker/                          ✅ Docker 配置
-│   └── docker-compose.yml           # 多容器編排
+│   ├── docker-compose.yml           # 應用程式多容器編排
+│   ├── ci-cd-docker-compose.yml     # 本地 CI/CD 環境編排 (GitLab, Jenkins)
+│   └── jenkins/
+│       └── Dockerfile               # 自定義 Jenkins 映像檔 (含 .NET 10, Node.js, Docker)
 │
 ├── jenkins/                         ✅ Jenkins 配置
-│   └── Jenkinsfile                   # Pipeline 定義
+│   └── Jenkinsfile                   # Pipeline 定義 (Linux Shell 版本)
 │
 ├── docs/                           ✅ 專案文件
 │   ├── 專案用途.md                # 原始需求
 │   ├── 憲法.md                    # 專案憲法 (v1.0.0)
+│   ├── jenkins-docker-strategies.md # Jenkins Docker 策略 (DooD vs DinD)
 │   ├── Specify.md                 # Feature Specification
 │   ├── plan.md                    # Implementation Plan
 │   ├── quickstart.md              # 快速開始指南
@@ -357,22 +361,43 @@ docker-compose ps
 docker-compose logs -f
 ```
 
-### 6. Jenkins CI/CD 設定
+### 6. 本地 CI/CD 環境架設 (GitLab & Jenkins)
 
-1. 確保 GitLab 專案已設定 webhook 觸發 Jenkins
-2. 推送程式碼至 feature branch：
+本專案提供了一套完整的本地 CI/CD 基礎設施，讓您可以在個人電腦上模擬企業級的開發流程。
 
+#### A. 啟動 CI/CD 服務
+```bash
+# 啟動 GitLab (Port 8929) 與 Jenkins (Port 8080)
+docker-compose -f docker/ci-cd-docker-compose.yml up -d
+```
+
+#### B. GitLab 初始化
+1. 瀏覽 `http://localhost:8929`。
+2. **獲取初始密碼**：
    ```bash
-   git add .
-   git commit -m "feat: 實作用戶註冊功能"
-   git push origin 001-shopping-website-cicd
+   docker exec gitlab grep 'Password:' /etc/gitlab/initial_root_password
+   ```
+   *(請注意：此文件會在 24 小時後自動刪除，登入後請立即修改 root 密碼)*
+3. 登入後建立一個新專案（例如 `jenkins-sample`）。
+4. 將此本地倉庫推送到 GitLab：
+   ```bash
+   git remote add origin http://localhost:8929/root/jenkins-sample.git
+   git push -u origin 001-shopping-website-cicd
    ```
 
-3. Jenkins 將自動觸發 Pipeline：
-   - Build: 建置前端與後端
-   - Test: 執行單元測試
-   - Docker Build: 建置 Docker 映像
-   - Deploy: 部署至目標環境
+#### C. Jenkins 初始化
+1. 瀏覽 `http://localhost:8080`。
+2. **獲取解鎖密碼** (第一次登入必備)：
+   ```bash
+   docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+   ```
+3. **預設登入資訊** (已透過 JCasC 設定，若已套用可使用)：
+   *   **帳號**：`admin`
+   *   **密碼**：`admin`
+   *(註：環境雖然設定跳過 Setup Wizard，但初次啟動仍建議先確認上述解鎖密碼)*
+4. **Pipeline 自動化**：
+   *   系統啟動後會自動建立一個名為 `jenkins-sample` 的作業。
+   *   預設連接至 `https://github.com/pro5251/jenkins-sample.git`，您可以依需求修改為您的 GitLab URL。
 
 ## 🚀 使用指南
 
@@ -462,10 +487,10 @@ pipeline {
             steps {
                 echo 'Building backend and frontend...'
                 dir('backend') {
-                    bat 'dotnet build'
+                    sh 'dotnet build'
                 }
                 dir('frontend') {
-                    bat 'npm install && npm run build'
+                    sh 'npm install && npm run build'
                 }
             }
         }
@@ -474,10 +499,10 @@ pipeline {
             steps {
                 echo 'Running tests...'
                 dir('backend') {
-                    bat 'dotnet test'
+                    sh 'dotnet test'
                 }
                 dir('frontend') {
-                    bat 'npm run test'
+                    sh 'npm run test'
                 }
             }
         }
@@ -485,14 +510,18 @@ pipeline {
         stage('Docker Build') {
             steps {
                 echo 'Building Docker images...'
-                bat 'docker-compose build'
+                dir('docker') {
+                    sh 'docker compose build'
+                }
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                bat 'docker-compose up -d'
+                dir('docker') {
+                    sh 'docker compose up -d'
+                }
             }
         }
     }

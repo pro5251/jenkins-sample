@@ -1,12 +1,15 @@
 jenkins:
   systemMessage: "Jenkins - Shopping Website CI/CD"
   numExecutors: 2
+  # 建議 Built-in Node 設為 0，讓 Agent 執行建置
+  # numExecutors: 0
   securityRealm:
     local:
       allowsSignup: false
       users:
         - id: "admin"
-          password: "admin"
+          # 透過環境變數注入，避免寫死密碼；預設值 admin 僅供本地開發使用
+          password: "${JENKINS_ADMIN_PASSWORD:-admin}"
   authorizationStrategy:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
@@ -15,16 +18,65 @@ security:
   globalJobDslSecurityConfiguration:
     useScriptSecurity: false
 
+# 非分類插件設定：GitLab 伺服器連線
+unclassified:
+  gitLabConnectionConfig:
+    connections:
+      - name: "GitLab"
+        url: "http://gitlab:8929"
+        apiTokenId: "gitlab-api-token"
+        clientBuildStatus: true
+        ignoreCertificateErrors: true
+        connectionTimeout: 10
+        readTimeout: 10
+
+# 憑證管理：透過環境變數注入敏感資訊
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          # GitLab 使用者帳密（用於 Git Clone）
+          - usernamePassword:
+              scope: GLOBAL
+              id: "gitlab-credentials"
+              username: "${GITLAB_USER:-root}"
+              password: "${GITLAB_PASSWORD:-password}"
+              description: "GitLab 使用者帳密（Git Clone 使用）"
+          # GitLab API Token（用於 Webhook 狀態回報）
+          - string:
+              scope: GLOBAL
+              id: "gitlab-api-token"
+              secret: "${GITLAB_API_TOKEN:-}"
+              description: "GitLab API Token（Webhook 狀態回報使用）"
+          # Docker Hub 帳密（用於推送映像）
+          - usernamePassword:
+              scope: GLOBAL
+              id: "dockerhub-credentials"
+              username: "${DOCKER_USERNAME:-}"
+              password: "${DOCKER_PASSWORD:-}"
+              description: "Docker Hub 帳密（推送映像使用）"
+
+# Job DSL：自動建立 CI/CD Pipeline Job
 jobs:
   - script: |
       pipelineJob('jenkins-sample') {
-        description('Shopping Website CI/CD Pipeline')
+        description('購物網站 CI/CD Pipeline — 自動建置、測試、容器化、部署')
+
+        // 關聯 GitLab 伺服器
+        properties {
+          gitLabConnectionProperty {
+            gitLabConnection('GitLab')
+          }
+        }
+
         definition {
           cpsScm {
             scm {
               git {
                 remote {
-                  url('https://github.com/pro5251/jenkins-sample.git')
+                  // Docker 網路內部使用 gitlab hostname，外部請改為實際 GitLab URL
+                  url('http://gitlab:8929/root/jenkins-sample.git')
+                  credentials('gitlab-credentials')
                 }
                 branch('*/main')
               }
@@ -32,7 +84,16 @@ jobs:
             scriptPath('jenkins/Jenkinsfile')
           }
         }
+
+        // 觸發條件：GitLab Push / MR 事件（需在 GitLab 專案設定 Webhook）
+        // 同時保留 SCM 輪詢作為備援（每 5 分鐘）
         triggers {
+          gitlab {
+            triggerOnPush(true)
+            triggerOnMergeRequest(true)
+            branchFilterType('All')
+            ciSkip(true)
+          }
           scm('H/5 * * * *')
         }
       }

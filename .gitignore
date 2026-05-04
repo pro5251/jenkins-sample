@@ -1,0 +1,20 @@
+# 環境變數（含敏感資訊，勿提交）
+docker/.env
+.env
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# 建置輸出
+bin/
+obj/
+dist/
+node_modules/
+
+# 測試結果
+TestResults/
+coverage/

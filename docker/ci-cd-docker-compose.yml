@@ -30,10 +30,22 @@ services:
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+      # 掛載 Docker Socket 讓 Jenkins 可以執行 docker 指令
       - /var/run/docker.sock:/var/run/docker.sock
+      # 以唯讀方式掛載 JCasC 設定（覆蓋映像內建的版本，方便本地調整）
       - ./jenkins/jenkins.yaml:/usr/share/jenkins/casc/jenkins.yaml:ro
     environment:
+      # 跳過 Jenkins 初始設定精靈（由 JCasC 全程接管）
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+      # Jenkins 管理員密碼（建議透過 .env 檔案注入，切勿寫死）
+      - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD:-admin}
+      # GitLab 憑證（用於 Git Clone 與 API 狀態回報）
+      - GITLAB_USER=${GITLAB_USER:-root}
+      - GITLAB_PASSWORD=${GITLAB_PASSWORD:-password}
+      - GITLAB_API_TOKEN=${GITLAB_API_TOKEN:-}
+      # Docker Hub 憑證（用於推送映像至 Registry）
+      - DOCKER_USERNAME=${DOCKER_USERNAME:-}
+      - DOCKER_PASSWORD=${DOCKER_PASSWORD:-}
     depends_on:
       - gitlab
     networks:
