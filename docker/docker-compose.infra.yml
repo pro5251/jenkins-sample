@@ -16,12 +16,17 @@ services:
     hostname: gitlab
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab:8929'
+        # 外部存取 URL（瀏覽器使用 localhost；Jenkins 透過 Docker 網路用 gitlab:8929 也可正常連線）
+        external_url 'http://localhost:8929'
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
-        # 關閉不必要服務，加快啟動
+        # 關閉不必要服務，節省記憶體、加快啟動
         prometheus_monitoring['enable'] = false
         grafana['enable'] = false
         gitlab_rails['usage_ping_enabled'] = false
+        # 降低 Puma worker 數量（POC 環境節省記憶體）
+        puma['worker_processes'] = 2
+        # 降低 Sidekiq concurrency
+        sidekiq['concurrency'] = 5
     ports:
       - "8929:8929"
       - "2224:22"
