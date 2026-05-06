@@ -62,7 +62,7 @@ jobs:
       pipelineJob('jenkins-sample') {
         description('購物網站 CI/CD Pipeline — 自動建置、測試、容器化、部署')
 
-        // 關聯 GitLab 伺服器
+        // 關聯 GitLab 伺服器（用於 commit 狀態回報）
         properties {
           gitLabConnectionProperty {
             gitLabConnection('GitLab')
@@ -74,30 +74,21 @@ jobs:
             scm {
               git {
                 remote {
-                  // Docker 網路內部使用 gitlab hostname（infra-network 服務名稱）
+                  // Jenkins 容器透過 Docker 網路用 gitlab hostname 存取 GitLab
                   url('http://gitlab:8929/root/jenkins-sample.git')
                   credentials('gitlab-credentials')
                 }
-                // 監聽 main 分支
                 branch('main')
               }
             }
             scriptPath('jenkins/Jenkinsfile')
-            lightweight(true)
           }
         }
 
-        // 觸發條件：
-        //   - GitLab Webhook（推送 / MR 事件）
-        //   - SCM 輪詢作為備援（每 5 分鐘）
-        // 注意：GitLab trigger 需要 gitlab-api-token 憑證有效才能正常運作
+        // SCM 輪詢：每 5 分鐘檢查一次（備援觸發機制）
+        // Webhook 觸發：GitLab 設定好後，在 GitLab 專案 Settings → Webhooks
+        // 新增 URL: http://<jenkins-host>:8080/project/jenkins-sample
         triggers {
-          gitlabPush {
-            buildOnPushEvents(true)
-            buildOnMergeRequestEvents(true)
-            enableCiSkip(true)
-            branchFilterType('All')
-          }
           scm('H/5 * * * *')
         }
       }
