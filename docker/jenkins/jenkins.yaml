@@ -74,25 +74,29 @@ jobs:
             scm {
               git {
                 remote {
-                  // Docker 網路內部使用 gitlab hostname，外部請改為實際 GitLab URL
+                  // Docker 網路內部使用 gitlab hostname（infra-network 服務名稱）
                   url('http://gitlab:8929/root/jenkins-sample.git')
                   credentials('gitlab-credentials')
                 }
-                branch('*/main')
+                // 監聽 main 分支
+                branch('main')
               }
             }
             scriptPath('jenkins/Jenkinsfile')
+            lightweight(true)
           }
         }
 
-        // 觸發條件：GitLab Push / MR 事件（需在 GitLab 專案設定 Webhook）
-        // 同時保留 SCM 輪詢作為備援（每 5 分鐘）
+        // 觸發條件：
+        //   - GitLab Webhook（推送 / MR 事件）
+        //   - SCM 輪詢作為備援（每 5 分鐘）
+        // 注意：GitLab trigger 需要 gitlab-api-token 憑證有效才能正常運作
         triggers {
-          gitlab {
-            triggerOnPush(true)
-            triggerOnMergeRequest(true)
+          gitlabPush {
+            buildOnPushEvents(true)
+            buildOnMergeRequestEvents(true)
+            enableCiSkip(true)
             branchFilterType('All')
-            ciSkip(true)
           }
           scm('H/5 * * * *')
         }

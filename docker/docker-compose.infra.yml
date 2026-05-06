@@ -1,0 +1,75 @@
+version: '3.8'
+
+# 基礎建設服務：GitLab + Jenkins
+# 啟動方式：docker compose -f docker-compose.infra.yml up -d
+#
+# 服務對應埠：
+#   GitLab Web UI  → http://localhost:8929
+#   GitLab SSH     → localhost:2224
+#   Jenkins Web UI → http://localhost:8080
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: unless-stopped
+    hostname: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab:8929'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+        # 關閉不必要服務，加快啟動
+        prometheus_monitoring['enable'] = false
+        grafana['enable'] = false
+        gitlab_rails['usage_ping_enabled'] = false
+    ports:
+      - "8929:8929"
+      - "2224:22"
+    volumes:
+      - gitlab_config:/etc/gitlab
+      - gitlab_logs:/var/log/gitlab
+      - gitlab_data:/var/opt/gitlab
+    networks:
+      - infra-network
+    shm_size: '256m'
+
+  jenkins:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+    container_name: jenkins
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      # 使用 volume 內的 JCasC，方便本地修改後 reload
+      - ./jenkins/jenkins.yaml:/usr/share/jenkins/casc/jenkins.yaml:ro
+    environment:
+      CASC_JENKINS_CONFIG: /usr/share/jenkins/casc/jenkins.yaml
+      JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:-admin}
+      # GitLab 憑證（POC 使用預設值）
+      GITLAB_USER: ${GITLAB_USER:-root}
+      GITLAB_PASSWORD: ${GITLAB_PASSWORD:-password}
+      GITLAB_API_TOKEN: ${GITLAB_API_TOKEN:-}
+      # Docker Hub（POC 可留空，Push/Deploy stage 只在 main branch 執行）
+      DOCKER_USERNAME: ${DOCKER_USERNAME:-}
+      DOCKER_PASSWORD: ${DOCKER_PASSWORD:-}
+      # Jenkins 初始 Skip Setup Wizard
+      JAVA_OPTS: "-Djenkins.install.runSetupWizard=false"
+    networks:
+      - infra-network
+    depends_on:
+      - gitlab
+
+volumes:
+  gitlab_config:
+  gitlab_logs:
+  gitlab_data:
+  jenkins_home:
+
+networks:
+  infra-network:
+    driver: bridge

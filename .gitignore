@@ -2,6 +2,9 @@
 docker/.env
 .env
 
+# Jenkins 本地掛載目錄（勿提交）
+docker/jenkins/jenkins_home/
+
 # OS
 .DS_Store
 
@@ -18,3 +21,5 @@ node_modules/
 # 測試結果
 TestResults/
 coverage/
+
+.fake
