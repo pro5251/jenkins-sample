@@ -1,0 +1,62 @@
+jenkins:
+  systemMessage: "Jenkins Standalone — Hello World Demo"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "${JENKINS_ADMIN_PASSWORD:-admin}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+security:
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: "dockerhub-credentials"
+              username: "${DOCKER_USERNAME:-}"
+              password: "${DOCKER_PASSWORD:-}"
+              description: "Docker Hub 帳密"
+
+jobs:
+  - script: |
+      pipelineJob('hello-world') {
+        description('Hello World 測試 Job — 驗證 Jenkins 正常運作')
+        definition {
+          cps {
+            script('''
+              pipeline {
+                agent any
+                stages {
+                  stage('Hello') {
+                    steps {
+                      echo 'Hello World!!'
+                      echo "Build number: ${env.BUILD_NUMBER}"
+                      echo "Jenkins is running successfully!"
+                    }
+                  }
+                  stage('Done') {
+                    steps {
+                      echo 'All done. Job completed successfully!'
+                    }
+                  }
+                }
+                post {
+                  success {
+                    echo 'BUILD SUCCESS'
+                  }
+                }
+              }
+            ''')
+            sandbox(true)
+          }
+        }
+      }
